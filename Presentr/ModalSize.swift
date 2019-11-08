@@ -28,6 +28,7 @@ public enum ModalSize {
 	case sideMargin(value: Float)
     case custom(size: Float)
     case customOrientation(sizePortrait: Float, sizeLandscape: Float)
+    case dynamicSize(closure: () -> CGSize)
 
     /**
      Calculates the exact width value for the presented view controller.
@@ -59,6 +60,8 @@ public enum ModalSize {
             return floorf(Float(parentSize.width) * percentage)
         case .sideMargin(let value):
             return floorf(Float(parentSize.width) - value * 2.0)
+        case .dynamicSize(let closure):
+            return Float(closure().width)
         }
     }
 
@@ -92,6 +95,8 @@ public enum ModalSize {
             return floorf(Float(parentSize.height) * percentage)
         case .sideMargin(let value):
             return floorf(Float(parentSize.height) - value * 2)
+        case .dynamicSize(let closure):
+            return Float(closure().height)
         }
     }
     
